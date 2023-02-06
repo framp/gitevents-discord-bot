@@ -106,7 +106,7 @@ impl IntoResponse for CommandResponse {
     fn into_response(self) -> http::Response<vercel_lambda::Body> {
         Response::builder()
             .status(StatusCode::OK)
-            .header("Content-Type", "text/json")
+            .header("Content-Type", "application/json")
             .body(vercel_lambda::Body::from(match self {
                 CommandResponse::Pong => get_pong_json().to_string(),
                 CommandResponse::Modal => get_modal_json().to_string(),
@@ -124,8 +124,6 @@ fn get_modal_component_json(
     style: MessageStyle,
 ) -> Value {
     json!({
-        "type": 1,
-        "components": [{
             "type": 4,
             "custom_id": id,
             "label": label,
@@ -134,7 +132,6 @@ fn get_modal_component_json(
             "max_length": 100,
             "placeholder": placeholder,
             "required": true
-        }]
     })
 }
 
